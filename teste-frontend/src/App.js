@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash} from '@fortawesome/free-solid-svg-icons'
+import './App.css';
 
 // URL da API para acessar os dados das pessoas;
 const apiUrl = 'http://localhost:3001/pessoas';
@@ -52,24 +55,30 @@ function App() {
     };
 
     return (
-        <div>
+        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif'}}>
             <h1>Cadastro de Pessoas</h1>
-            <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Nome"   value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} required />
-                <input type="text" placeholder="Rua"    value={form.rua} onChange={(e) => setForm({ ...form, rua: e.target.value })} required />
+            <form onSubmit={handleSubmit} style={{ marginBottom: '20px'}}>
+                <input type="text" placeholder="Nome"   value={form.nome}   onChange={(e) => setForm({ ...form, nome: e.target.value })} required />
+                <input type="text" placeholder="Rua"    value={form.rua}    onChange={(e) => setForm({ ...form, rua: e.target.value })} required />
                 <input type="text" placeholder="Número" value={form.numero} onChange={(e) => setForm({ ...form, numero: e.target.value })} required />
                 <input type="text" placeholder="Bairro" value={form.bairro} onChange={(e) => setForm({ ...form, bairro: e.target.value })} required />
                 <input type="text" placeholder="Cidade" value={form.cidade} onChange={(e) => setForm({ ...form, cidade: e.target.value })} required />
                 <input type="text" placeholder="Estado" value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })} required />
                 
                 <button type="submit">{editId ? 'Atualizar' : 'Cadastrar'}</button>
-            </form>
-            <ul>
+                </form>
+            <ul style={{ listStyleType: 'none', padding: 0 }}>
                 {pessoas.map((pessoa) => (
-                    <li key={pessoa.id}>
-                        {pessoa.nome}, {pessoa.rua}, {pessoa.numero}, {pessoa.bairro}, {pessoa.cidade}, {pessoa.estado}
-                        <button onClick={() => handleEdit(pessoa)}>Editar</button>
-                        <button onClick={() => handleDelete(pessoa.id)}>Deletar</button>
+                    <li key={pessoa.id} style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
+                        <span style={{ flex: 1 }}>
+                            {pessoa.nome}, {pessoa.rua}, {pessoa.numero}, {pessoa.bairro}, {pessoa.cidade}, {pessoa.estado}
+                        </span>
+                        <button onClick={() => handleEdit(pessoa)} style={{ marginRight: '10px', background: 'none', border: 'none', cursor: 'pointer' }}>
+                            <FontAwesomeIcon icon={faEdit} />
+                        </button>
+                        <button onClick={() => handleDelete(pessoa.id)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                            <FontAwesomeIcon icon={faTrash} />
+                        </button>
                     </li>
                 ))}
             </ul>
